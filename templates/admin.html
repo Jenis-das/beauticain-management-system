@@ -8,6 +8,13 @@
 </head>
 <body>
     <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
         <h2>Add Artist</h2>
         <form action="/admin" method="post" enctype="multipart/form-data">
             <label>Name:</label>
@@ -38,6 +45,9 @@
 
             <label>WhatsApp Number:</label>
             <input type="number" value="123456" name="whatsapp">
+            
+            <label>Email :</label>
+            <input type="email" name="email" value="ab@gmail.com" required>
 
             <label>Pincode:</label>
             <input type="number" value="123456" name="pincode">

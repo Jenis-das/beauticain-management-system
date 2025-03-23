@@ -170,6 +170,8 @@
     </style>
 </head>
 <body>
+    
+
     <div class="artist-card">
         <div class="image-container">
             <img src="{{ url_for('static', filename='uploads/' + artist.id|string + '.' + artist.image_filename.split('.')[-1]) }}" alt="Artist Image">
@@ -187,9 +189,10 @@
                 <p><strong>Pincode:</strong> {{ artist.pincode }}</p>
                 <p><strong>Marriage Type:</strong> {{ artist.marriage_type }}</p>
                 <p class="price"><strong>Work Per Hour:</strong> ₹{{ artist.cost }}</p>
+                <p class="price"><strong>Work Per Hour:</strong> ₹{{ artist.email }}</p>
             </div>
             <div class="buttons">
-                <a href="{{ artist.email }}" class="btn email-btn">📧 Email Now</a>
+                <a href="mailto:{{ artist.email }}" target="_blank" class="btn email-btn">📧 Email Now</a>
                 <a href="https://wa.me/{{ artist.whatsapp }}" target="_blank" class="btn whatsapp-btn">💬 WhatsApp Message</a>
             </div>
         </div>
