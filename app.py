@@ -29,9 +29,53 @@ class Artist(db.Model):
     image_filename = db.Column(db.String(255), nullable=True)
 
 
-# Ensure database is created
-with app.app_context():
-    db.create_all()
+
+@app.route('/beauticians', methods=['GET', 'POST'])
+def beauticians():
+    query = Artist.query
+
+    # Use request.args for GET and request.form for POST
+    if request.method == 'POST':
+        state = request.form.get('state')
+        wedding_type = request.form.get('wedding_type')
+        district = request.form.get('district')
+        category = request.form.get('category')
+    else:  # GET method
+        state = request.args.get('state')
+        wedding_type = request.args.get('wedding_type')
+        district = request.args.get('district')
+        category = request.args.get('category')
+
+    # Apply filters if selected
+    if state:
+        query = query.filter_by(state=state)
+    if wedding_type:
+        query = query.filter_by(marriage_type=wedding_type)
+    if district:
+        query = query.filter_by(district=district)
+    if category:
+        query = query.filter_by(category=category)
+
+    artists = query.all()  
+    states = ["Tamil Nadu", "Kerala", "Karnataka"]
+    wedding_types = ["Hindu", "Muslim", "Christian"]
+    districts = [d[0] for d in Artist.query.with_entities(Artist.district).distinct().all()]
+    category = [d[0] for d in Artist.query.with_entities(Artist.category).distinct().all()]
+
+    return render_template('beauticians.html', artists=artists, states=states, wedding_types=wedding_types, districts=districts , category=category)
+
+
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+
+@app.route('/')
+def apply():
+    return render_template('apply.html')
+
+
 
 # Route to show the admin form
 @app.route('/To_add_artist')
@@ -115,7 +159,6 @@ def add_artist():
 @app.route('/artist/<int:artist_id>')
 def view_artist(artist_id):
     artist = Artist.query.get(artist_id)
-    print(type(artist), artist)  # Debugging line
     if not artist:
         return "Artist not found!", 404
     return render_template('artist_profile.html', artist=artist)

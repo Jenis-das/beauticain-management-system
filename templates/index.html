@@ -3,9 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Ragv</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <a href="/admin">admin</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Beauti</a>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#AboutUs">About Us</a></li>
+                <li><a href="beauticians">Beauticians</a></li>
+                <li><a href="apply">Apply as Designer </a></li>
+                <li><a href="/dashboard">Admin</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Find the Best beautician Here</h1>
+            <p>With thousands of trusted beautician across India</p>
+            <div class="search-box">
+                <input type="text" placeholder="Search for beautician, cosmetics...">
+                <button>Search</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="categories">
+        <h2>Browse by Category</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <h3>Christian Wedding Styles</h3>
+            </div>
+            <div class="category-card">
+                <h3>Hindu Wedding Styles</h3>
+            </div>  
+            <div class="category-card">
+                <h3>Muslims Wedding Styles</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-vendors">
+        <h2>Our Past Services</h2>
+        <div class="vendor-grid">
+            <div class="vendor-card">
+                <img src="images/image (5).png" alt="Royal Palace Venue">
+                <div class="vendor-info">
+                    <h3>Royal Palace Venue</h3>
+                    <p>Venue • Delhi</p>
+                    <div class="rating">★ 4.8 (156 reviews)</div>
+                </div>
+            </div>
+            <div class="vendor-card">
+                <img src="images/image (6).png" alt="Glamour Makeup Studio">
+                <div class="vendor-info">
+                    <h3>Glamour Makeup Studio</h3>
+                    <p>Venue • Mumbai</p>
+                    <div class="rating">★ 4.9 (203 reviews)</div>
+                </div>
+            </div>
+            <div class="vendor-card">
+                <img src="images/image (7).png" alt="Capture Moments">
+                <div class="vendor-info">
+                    <h3>Capture Moments</h3>
+                    <p>Venue • Bangalore</p>
+                    <div class="rating">★ 4.7 (178 reviews)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="real-weddings">
+        <h2>Our beauticians</h2>
+        <div class="wedding-grid">
+            <div class="wedding-card">
+                <img src="images/image (2).png">
+                <div class="wedding-info">
+                    <h3>Priya</h3>
+                    <h3>4.7/5</h3>
+                    <p>Udaipur Palace</p>
+                    <span>December 2023</span>
+                </div>
+                <div class="booking">Book Now</div>
+            </div>
+            <div class="wedding-card">
+                <img src="images/image (3).png">
+                <div class="wedding-info">
+                    <h3>Anita </h3>
+                    <h3>4.8/5 </h3>
+                    <p>kerala Resort</p>
+                    <span>November 2023</span>
+                </div>
+                <div class="booking">Book Now</div>
+            </div>
+            <div class="wedding-card">
+                <img src="images/image (4).png">
+                <div class="wedding-info">
+                    <h3>Arjun </h3>
+                    <h3>4.5/5</h3>
+                    <p>Erode Backwaters</p>
+                    <span>October 2023</span>
+                </div>
+                <div class="booking">Book Now</div>
+            </div>
+        </div>
+    </section>
+    <section id="aboutUs">
+        <h3 class="aboutUs">About Us</h3>
+        <p>At Beauti, we believe that every bride and groom deserve to look and feel their best on their special day. Our platform connects talented beauticians with clients looking for expert beauty and styling services for Hindu, Muslim, and Christian weddings.We provide a seamless booking experience, giving skilled beauticians the opportunity to showcase their expertise while helping brides, grooms, and their families find the perfect professional to match their traditions and preferences.Whether it's a vibrant Hindu wedding, an elegant Christian ceremony, or a beautiful Nikah celebration, we ensure that every look is crafted with precision, tradition, and beauty in mind.Join us in creating unforgettable wedding moments with the perfect beauty experts!</p>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Beauti</h3>
+                <p>India's favorite wedding planning platform to help you plan your special day.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/careers">Careers</a></li>
+                    <li><a href="/terms">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Vendor Services</h4>
+                <ul>
+                    <li><a href="/vendor-signup">List Your Business</a></li>
+                    <li><a href="/vendor-login">Vendor Login</a></li>
+                    <li><a href="/vendor-help">Vendor Help Center</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" class="social-icon">Instagram</a>
+                    <a href="#" class="social-icon">Facebook</a>
+                    <a href="#" class="social-icon">Twitter</a>
+                    <a href="#" class="social-icon">YouTube</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Beauti. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>

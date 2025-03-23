@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Add Artist</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 </head>
+
 <body>
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
         {% endif %}
         {% endwith %}
         <h2>Add Artist</h2>
@@ -34,18 +36,25 @@
             <label>Area Address:</label>
             <input value="addresses" type="text" name="area" required>
 
-            <label>State:</label>
-            <input type="text" name="state" value="qwerty" required>
+            <label for="state">State:</label>
+            <select id="state" name="state" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; margin-top: 5px; margin-bottom: 10px;">
+                <option value="" disabled selected>Select a state</option>
+                <option value="tamilnadu">Tamil Nadu</option>
+                <option value="kerala">Kerala</option>
+                <option value="karnataka">Karnataka</option>
+            </select>
 
-            <label>District:</label>
-            <input type="text" name="district" value="asdfgh" required>
+            <label for="district">District:</label>
+            <select id="district" name="district" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; margin-top: 5px; margin-bottom: 10px;">
+                <option value="" disabled selected>Select a district</option>
+            </select>
 
             <label>Phone Number:</label>
             <input type="number" name="phone" value="123456" required>
 
             <label>WhatsApp Number:</label>
             <input type="number" value="123456" name="whatsapp">
-            
+
             <label>Email :</label>
             <input type="email" name="email" value="ab@gmail.com" required>
 
@@ -62,14 +71,59 @@
             <label>Work Per Hour in Rupees</label>
             <input type="number" name="cost" value="1234567" required>
 
-            
             <label>Upload Image:</label>
             <input type="file" name="image" required>
-
-
 
             <button type="submit">Submit</button>
         </form>
     </div>
+
+    <script>
+        const stateSelect = document.getElementById('state');
+        const districtSelect = document.getElementById('district');
+
+        const districts = {
+            tamilnadu: [
+                "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode",
+                "Kallakurichi", "Kanchipuram", "Kanniyakumari", "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai",
+                "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet",
+                "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thiruvallur", "Thiruvarur", "Thoothukudi",
+                "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvannamalai", "Vellore", "Viluppuram",
+                "Virudhunagar"
+            ],
+            kerala: [
+                "Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode",
+                "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"
+            ],
+            karnataka: [
+                "Bagalkot", "Ballari", "Belagavi", "Bengaluru Rural", "Bengaluru Urban", "Bidar", "Chamarajanagar",
+                "Chikballapur", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada", "Davanagere", "Gadag", "Hassan",
+                "Haveri", "Kalaburagi", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara",
+                "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada", "Vijayapura", "Yadgir"
+            ]
+        };
+
+        function populateDistricts(state) {
+            districtSelect.innerHTML = '<option value="" disabled selected>Select a district</option>';
+
+            if (districts[state]) {
+                districts[state].forEach(district => {
+                    const option = document.createElement("option");
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        stateSelect.addEventListener('change', function() {
+            populateDistricts(this.value);
+        });
+
+        if(stateSelect.value){
+           populateDistricts(stateSelect.value);
+        }
+    </script>
 </body>
+
 </html>

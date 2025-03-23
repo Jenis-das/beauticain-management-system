@@ -7,6 +7,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='card.css') }}">
 </head>
 <body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Beauti</a>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#AboutUs">About Us</a></li>
+                <li><a href="beauticians">Beauticians</a></li>
+                <li><a href="#custom design">Custom Design  </a></li>
+                <li><a href="/dashboard">Admin</a></li>
+
+            </ul>
+        </div>
+    </nav>
+
+
     <div class="artist-card">
         <div class="image-container">
             <img src="{{ url_for('static', filename='uploads/' + artist.id|string + '.' + artist.image_filename.split('.')[-1]) }}" alt="Artist Image">

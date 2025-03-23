@@ -17,7 +17,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh;
         background-color: #f7f7f7;
         padding: 20px;
     }
@@ -33,11 +33,12 @@
         overflow: hidden;
         border: 5px solid #E72E77;
         transition: transform 0.3s ease-in-out;
+        margin: 5em 0;
     }
     
-    .artist-card:hover {
+    /* .artist-card:hover {
         transform: scale(1.02);
-    }
+    } */
     
     /* Image Styling */
     .image-container {
@@ -168,9 +169,23 @@
         }
     }
     </style>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 </head>
 <body>
-    
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Beauti</a>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#AboutUs">About Us</a></li>
+                <li><a href="beauticians">Beauticians</a></li>
+                <li><a href="#custom design">Custom Design  </a></li>
+                <li><a href="/dashboard">Admin</a></li>
+
+            </ul>
+        </div>
+    </nav>
 
     <div class="artist-card">
         <div class="image-container">
@@ -189,7 +204,6 @@
                 <p><strong>Pincode:</strong> {{ artist.pincode }}</p>
                 <p><strong>Marriage Type:</strong> {{ artist.marriage_type }}</p>
                 <p class="price"><strong>Work Per Hour:</strong> ₹{{ artist.cost }}</p>
-                <p class="price"><strong>Work Per Hour:</strong> ₹{{ artist.email }}</p>
             </div>
             <div class="buttons">
                 <a href="mailto:{{ artist.email }}" target="_blank" class="btn email-btn">📧 Email Now</a>

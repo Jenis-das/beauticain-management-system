@@ -4,42 +4,224 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link rel="stylesheet" href="{{url_for('static', filename='css/beauticians.css')}}">
+    <style>
+    
+    
+    
+
+  .filter-form{
+    margin: 2em auto;
+    width: 80%;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 2px;
+  }
+
+
+#wedding_type,input[type="text"]{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+ 
+  .form-group select,
+  .form-group input[type="text"],
+  .form-group button,
+  option,
+  select
+  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+
+    width: 100%;
+}
+
+  .searchable-select .dropdown {
+    position: absolute;
+    display: inline;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    padding: 10px;
+    z-index: 1000;
+    display: none;
+  }
+
+  .form-group select,
+  .form-group input[type="text"],
+  .form-group button,
+  option,
+  select
+  ,.filter{
+    height: 3rem;
+  }
+
+  .searchable-select .dropdown div {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .real-weddings .filter-form .form-group {
+    margin-bottom: 20px;
+    max-width: 400px;
+  }
+
+  /* .searchable-select .dropdown div:hover {
+    background-color: #f0f0f0;
+  } */
+
+  @media (max-width: 600px) {
+    .form-group select,
+    .form-group input[type="text"],
+    .form-group button {
+      font-size: 14px;
+    }
+  }
+    </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Beauti</a>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#AboutUs">About Us</a></li>
+                <li><a href="beauticians">Beauticians</a></li>
+                <li><a href="apply">Apply as Designer </a></li>
+                <li><a href="#ContactUs">Contact Us</a></li>
+
+            </ul>
+        </div>
+    </nav>
     <section class="real-weddings">
         <h2>Our beauticians</h2>
+
+        <form method="GET" class="filter-form">
+            <div class="form-group">
+              <select name="wedding_type" id="wedding_type">
+                <option value="">Select Wedding Types</option>
+                {% for wedding in wedding_types %}
+                <option value="{{ wedding }}">{{ wedding }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+
+            <div class="form-group">
+              <select name="category" id="beauticianType">
+                <option value="">Select beautician Type</option>
+                {% for cat in category%}
+                  <option value="{{ cat }}">{{ cat }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          
+            <div class="form-group searchable-select">
+              <input type="text" id="district_search" placeholder="Type to search district...">
+              <div class="dropdown" id="district_dropdown">
+                {% for dist in districts %}
+                <div data-value="{{ dist }}">{{ dist }}</div>
+                {% endfor %}
+              </div>
+              <input type="hidden" name="district" id="district">
+            </div>
+          
+            <button type="submit" class="filter">Filter</button>
+          </form>
         <div class="wedding-grid">
+            {% for artist in artists %}
             <div class="wedding-card">
-                <img src="images/image (2).png">
+                <img src="{{ url_for('static', filename='uploads/' + artist.image_filename) }}">
                 <div class="wedding-info">
-                    <h3>Priya</h3>
-                    <h3>4.7/5</h3>
-                    <p>Udaipur Palace</p>
-                    <span>December 2023</span>
+                    <h3>{{ artist.name }}</h3>
+                    <h3>{{ artist.state }}</h3>
+                    <p>{{ artist.district }}</p>
+                    <span>₹{{ artist.cost }}</span>
                 </div>
-                <div class="booking">Book Now</div>
+                <div class="booking"> <a href="{{ url_for('view_artist', artist_id=artist.id) }}">Book Now</a></div>
             </div>
-            <div class="wedding-card">
-                <img src="images/image (3).png">
-                <div class="wedding-info">
-                    <h3>Anita </h3>
-                    <h3>4.8/5 </h3>
-                    <p>kerala Resort</p>
-                    <span>November 2023</span>
-                </div>
-                <div class="booking">Book Now</div>
-            </div>
-            <div class="wedding-card">
-                <img src="images/image (4).png">
-                <div class="wedding-info">
-                    <h3>Arjun </h3>
-                    <h3>4.5/5</h3>
-                    <p>Erode Backwaters</p>
-                    <span>October 2023</span>
-                </div>
-                <div class="booking">Book Now</div>
-            </div>
+            {% endfor %}
+            
         </div>
     </section>
+
+    <script>
+        document.getElementById('district_search').addEventListener('input', function() {
+            let filter = this.value.toLowerCase();
+            let dropdown = document.getElementById('district_dropdown');
+            dropdown.style.display = 'block';
+            let options = dropdown.getElementsByTagName('div');
+            
+            for (let option of options) {
+                if (option.innerText.toLowerCase().includes(filter)) {
+                    option.style.display = "block";
+                } else {
+                    option.style.display = "none";
+                }
+            }
+        });
+
+        document.querySelectorAll('#district_dropdown div').forEach(item => {
+            item.addEventListener('click', function() {
+                document.getElementById('district_search').value = this.innerText;
+                document.getElementById('district').value = this.dataset.value;
+                document.getElementById('district_dropdown').style.display = 'none';
+            });
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.searchable-select')) {
+                document.getElementById('district_dropdown').style.display = 'none';
+            }
+        });
+    </script>
+
+<script>
+    const districtSearch = document.getElementById('district_search');
+    const districtDropdown = document.getElementById('district_dropdown');
+    const districtInput = document.getElementById('district');
+  
+    districtSearch.addEventListener('focus', () => {
+      districtDropdown.style.display = 'block';
+    });
+  
+    districtSearch.addEventListener('blur', () => {
+      // delay to allow click on dropdown item to register
+      setTimeout(() => {
+          districtDropdown.style.display = 'none';
+      }, 200);
+    });
+  
+    districtSearch.addEventListener('input', () => {
+      const filter = districtSearch.value.toUpperCase();
+      const dropdownItems = districtDropdown.getElementsByTagName('div');
+  
+      for (let item of dropdownItems) {
+        const text = item.textContent.toUpperCase();
+        if (text.indexOf(filter) > -1) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      }
+    });
+  
+    districtDropdown.addEventListener('click', (event) => {
+      if (event.target.tagName === 'DIV') {
+        districtSearch.value = event.target.textContent;
+        districtInput.value = event.target.dataset.value;
+        districtDropdown.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
