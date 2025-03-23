@@ -153,7 +153,8 @@ def application():
         # Check if email already exists
         existing_application = Application.query.filter_by(email=email).first()
         if existing_application:
-            flash("You have already applied!", "danger")
+            flash("You have already applied!", "dangen"
+            "r")
             return redirect(url_for('application'))
 
         # Save the application
