@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Profile</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/artists.css') }}"> -->
+     <style>* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Arial', sans-serif;
+    }
+    
+    /* Body Styling */
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f7f7f7;
+        padding: 20px;
+    }
+    
+    /* Full-Screen Card */
+    .artist-card {
+        display: flex;
+        width: 70%;
+        height: 80vh;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        border: 5px solid #E72E77;
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .artist-card:hover {
+        transform: scale(1.02);
+    }
+    
+    /* Image Styling */
+    .image-container {
+        width: 40%;
+        background-color: #E72E77;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    
+    /* .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    } */
+    
+    /* Artist Info */
+    .artist-info {
+        width: 60%;
+        padding: 40px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .name {
+        color: #E72E77;
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .category {
+        color: #555;
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    
+    .about {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    /* Details Section */
+    .details {
+        font-size: 16px;
+    }
+    
+    .details p {
+        margin: 8px 0;
+        color: #444;
+    }
+    
+    .price {
+        color: #E72E77;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    /* Buttons */
+    .buttons {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn {
+        padding: 12px 20px;
+        font-size: 16px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-align: center;
+        transition: 0.3s ease-in-out;
+    }
+    
+    .email-btn {
+        background-color: #E72E77;
+        color: white;
+        border: 2px solid #E72E77;
+    }
+    
+    .email-btn:hover {
+        background-color: white;
+        color: #E72E77;
+    }
+    
+    .whatsapp-btn {
+        background-color: #25D366;
+        color: white;
+        border: 2px solid #25D366;
+    }
+    
+    .whatsapp-btn:hover {
+        background-color: white;
+        color: #25D366;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 900px) {
+        .artist-card {
+            flex-direction: column;
+            width: 90%;
+            height: auto;
+        }
+    
+        .image-container {
+            width: 100%;
+            height: 300px;
+        }
+    
+        .artist-info {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+    
+        .details {
+            text-align: center;
+        }
+    
+        .buttons {
+            justify-content: center;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="artist-card">
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='uploads/' + artist.id|string + '.' + artist.image_filename.split('.')[-1]) }}" alt="Artist Image">
+        </div>
+        <div class="artist-info">
+            <h2 class="name">{{ artist.name }}</h2>
+            <p class="category">{{ artist.category }}</p>
+            <p class="about">{{ artist.about }}</p>
+            <div class="details">
+                <p><strong>Area:</strong> {{ artist.area }}</p>
+                <p><strong>State:</strong> {{ artist.state }}</p>
+                <p><strong>District:</strong> {{ artist.district }}</p>
+                <p><strong>Phone:</strong> {{ artist.phone }}</p>
+                <p><strong>WhatsApp:</strong> {{ artist.whatsapp }}</p>
+                <p><strong>Pincode:</strong> {{ artist.pincode }}</p>
+                <p><strong>Marriage Type:</strong> {{ artist.marriage_type }}</p>
+                <p class="price"><strong>Work Per Hour:</strong> ₹{{ artist.cost }}</p>
+            </div>
+            <div class="buttons">
+                <a href="{{ artist.email }}" class="btn email-btn">📧 Email Now</a>
+                <a href="https://wa.me/{{ artist.whatsapp }}" target="_blank" class="btn whatsapp-btn">💬 WhatsApp Message</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+

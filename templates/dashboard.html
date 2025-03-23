@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('total-logins').textContent = data.total_logins;
+                    document.getElementById('total-bookings').textContent = data.total_bookings;
+                    document.getElementById('new-registrations').textContent = data.new_registrations;
+                    
+                    const ctx = document.getElementById('bookingChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                            datasets: [{
+                                label: 'Bookings per Day',
+                                data: data.booking_trends,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 2,
+                                fill: false
+                            }]
+                        }
+                    });
+                });
+        });
+    </script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="text-center">Admin Dashboard</h2>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Logins</h5>
+                        <p class="card-text" id="total-logins">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Bookings</h5>
+                        <p class="card-text" id="total-bookings">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">New Registrations</h5>
+                        <p class="card-text" id="new-registrations">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3><a href="/To_add_artist">Add Beauticians</a></h3>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <canvas id="bookingChart"></canvas>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Add Artist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Add Artist</h2>
+        <form action="/admin" method="post" enctype="multipart/form-data">
+            <label>Name:</label>
+            <input type="text" name="name" value="kakdsa" required>
+
+            <label>Category:</label>
+            <select name="category" required>
+                <option value="Costume Designer">Costume Designer</option>
+                <option value="Event Artist">Event Artist</option>
+                <option value="Mehendi Artist">Mehendi Artist</option>
+                <option value="Hair Stylist">Hair Stylist</option>
+            </select>
+
+            <label>About:</label>
+            <textarea value="abouts" name="about" class="txt-area" required></textarea>
+
+            <label>Area Address:</label>
+            <input value="addresses" type="text" name="area" required>
+
+            <label>State:</label>
+            <input type="text" name="state" value="qwerty" required>
+
+            <label>District:</label>
+            <input type="text" name="district" value="asdfgh" required>
+
+            <label>Phone Number:</label>
+            <input type="number" name="phone" value="123456" required>
+
+            <label>WhatsApp Number:</label>
+            <input type="number" value="123456" name="whatsapp">
+
+            <label>Pincode:</label>
+            <input type="number" value="123456" name="pincode">
+
+            <label>Marriage Type:</label>
+            <select name="marriage_type" required>
+                <option value="Hindu">Hindu</option>
+                <option value="Muslim">Muslim</option>
+                <option value="Christian">Christian</option>
+            </select>
+
+            <label>Work Per Hour in Rupees</label>
+            <input type="number" name="cost" value="1234567" required>
+
+            
+            <label>Upload Image:</label>
+            <input type="file" name="image" required>
+
+
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
