@@ -5,18 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Add Artist</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/To_add_artist.css') }}">
+    <style>
+        #dashboardsHeading {
+            color: black;
+            /* text-decoration: none; */
+            margin: 3em 0 1em 0;
+        }
+        #dashboardsHeading a{
+            color: black;
+            /* text-decoration: none; */
+            margin: 3em 0 0.3em 0;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
         <div class="alert alert-{{ category }}">{{ message }}</div>
         {% endfor %}
         {% endif %}
         {% endwith %}
+
+
+    <div id="dashboardsHeading"><a href="dashboard" ><h1>Dashboard</h1></a></div>
+    <div class="container">
+        
         <h2>Add Artist</h2>
         <form action="/admin" method="post" enctype="multipart/form-data">
             <label>Name:</label>

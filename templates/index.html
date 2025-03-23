@@ -13,11 +13,19 @@
             <a href="/" class="logo">Beauti</a>
             <button class="mobile-menu-btn">☰</button>
             <ul class="nav-links">
-                <li><a href="#services">Services</a></li>
                 <li><a href="#AboutUs">About Us</a></li>
-                <li><a href="beauticians">Beauticians</a></li>
-                <li><a href="apply">Apply as Designer </a></li>
-                <li><a href="/dashboard">Admin</a></li>
+                {% if 'user_id' in session %}
+                    <li><a href="beauticians">Beauticians</a></li>
+                    <li><a href="apply">Apply as Designer </a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Beauticians</a></li>
+                    <li><a href="{{ url_for('login') }}">Apply as Designer </a></li>
+                {% endif %}
+                {% if 'user_id' in session %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                {% endif %}
 
             </ul>
         </div>
