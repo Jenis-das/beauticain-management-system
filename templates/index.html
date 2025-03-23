@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ragv</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <style>
+        .moreBeauticians{
+            width: 90%;
+            display: block;
+            text-align: right;
+            clear: both;
+            color: black;
+
+        }
+    </style>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -61,27 +71,27 @@
         <h2>Our Past Services</h2>
         <div class="vendor-grid">
             <div class="vendor-card">
-                <img src="images/image (5).png" alt="Royal Palace Venue">
+                <img src="{{ url_for('static', filename='images/image (5).png' ) }}"  alt="Royal Palace Venue">
                 <div class="vendor-info">
                     <h3>Royal Palace Venue</h3>
                     <p>Venue • Delhi</p>
-                    <div class="rating">★ 4.8 (156 reviews)</div>
+                    <div class="rating">154 reviews</div>
                 </div>
             </div>
             <div class="vendor-card">
-                <img src="images/image (6).png" alt="Glamour Makeup Studio">
+                <img src=" {{ url_for('static', filename='images/image (6).png' ) }}" alt="Glamour Makeup Studio">
                 <div class="vendor-info">
                     <h3>Glamour Makeup Studio</h3>
                     <p>Venue • Mumbai</p>
-                    <div class="rating">★ 4.9 (203 reviews)</div>
+                    <div class="rating">203 reviews</div>
                 </div>
             </div>
             <div class="vendor-card">
-                <img src="images/image (7).png" alt="Capture Moments">
+                <img src="{{ url_for('static', filename='images/image (7).png' ) }}" alt="Capture Moments">
                 <div class="vendor-info">
                     <h3>Capture Moments</h3>
                     <p>Venue • Bangalore</p>
-                    <div class="rating">★ 4.7 (178 reviews)</div>
+                    <div class="rating">178 reviews</div>
                 </div>
             </div>
         </div>
@@ -91,36 +101,42 @@
         <h2>Our beauticians</h2>
         <div class="wedding-grid">
             <div class="wedding-card">
-                <img src="images/image (2).png">
+                <img src=" {{ url_for('static', filename='images/image (2).png' ) }}">
                 <div class="wedding-info">
                     <h3>Priya</h3>
-                    <h3>4.7/5</h3>
+                    <!-- <h3>4.7/5</h3> -->
                     <p>Udaipur Palace</p>
                     <span>December 2023</span>
                 </div>
                 <div class="booking">Book Now</div>
             </div>
             <div class="wedding-card">
-                <img src="images/image (3).png">
+                <img src=" {{ url_for('static', filename='images/image (3).png' ) }}">
                 <div class="wedding-info">
                     <h3>Anita </h3>
-                    <h3>4.8/5 </h3>
+                    <!-- <h3>4.8/5 </h3> -->
                     <p>kerala Resort</p>
                     <span>November 2023</span>
                 </div>
                 <div class="booking">Book Now</div>
             </div>
             <div class="wedding-card">
-                <img src="images/image (4).png">
+                <img src=" {{ url_for('static', filename='images/image (4).png' ) }}">
                 <div class="wedding-info">
                     <h3>Arjun </h3>
-                    <h3>4.5/5</h3>
+                    <!-- <h3>4.5/5</h3> -->
                     <p>Erode Backwaters</p>
                     <span>October 2023</span>
                 </div>
                 <div class="booking">Book Now</div>
             </div>
         </div>
+        {% if 'user_id' in session %}
+        <a class="moreBeauticians" href="beauticians">more</a>
+        {% else %}
+            <a class="moreBeauticians" href="{{ url_for('login') }}">Beauticians</a>
+        {% endif %}
+        
     </section>
     <section id="aboutUs">
         <h3 class="aboutUs">About Us</h3>

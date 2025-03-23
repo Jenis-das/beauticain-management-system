@@ -9,7 +9,12 @@
     <style>
     
     
-    
+    #ourbeauticians{
+      margin: 3rem;
+      font-size: 35px;
+    }    
+
+
 
   .filter-form{
     margin: 2em auto;
@@ -111,7 +116,7 @@
     </div>
 </nav>
     <section class="real-weddings">
-        <h2>Our beauticians</h2>
+        <h2 id="ourbeauticians">Our beauticians</h2>
 
         <form method="GET" class="filter-form">
             <div class="form-group">
@@ -155,7 +160,12 @@
                     <p>{{ artist.district }}</p>
                     <span>₹{{ artist.cost }}</span>
                 </div>
-                <div class="booking"> <a href="{{ url_for('view_artist', artist_id=artist.id) }}">Book Now</a></div>
+
+                <div class="booking">
+                  <a href="{{ url_for('view_artist', artist_id=artist.id) }}">
+                    <div>Book Now</div>
+                  </a>
+                </div>
             </div>
             {% endfor %}
             
