@@ -178,6 +178,49 @@ def applications_list():
 
 
 
+# @app.route('/beauticians', methods=['GET', 'POST'])
+# def beauticians():
+#     query = Artist.query
+
+#     # Handle search query from index.html
+#     search_query = request.args.get('search')
+#     if search_query:
+#         query = query.filter(
+#             Artist.name.ilike(f"%{search_query}%") | 
+#             Artist.category.ilike(f"%{search_query}%")
+#         )
+
+#     # Use request.args for GET and request.form for POST
+#     if request.method == 'POST':
+#         state = request.form.get('state')
+#         wedding_type = request.form.get('wedding_type')
+#         district = request.form.get('district')
+#         category = request.form.get('category')
+#     else:  # GET method
+#         state = request.args.get('state')
+#         wedding_type = request.args.get('wedding_type')
+#         district = request.args.get('district')
+#         category = request.args.get('category')
+
+#     # Apply filters if selected
+#     if state:
+#         query = query.filter_by(state=state)
+#     if wedding_type:
+#         query = query.filter_by(marriage_type=wedding_type)
+#     if district:
+#         query = query.filter_by(district=district)
+#     if category:
+#         query = query.filter_by(category=category)
+
+#     artists = query.all()  
+#     states = ["Tamil Nadu", "Kerala", "Karnataka"]
+#     wedding_types = ["Hindu", "Muslim", "Christian"]
+#     districts = [d[0] for d in Artist.query.with_entities(Artist.district).distinct().all()]
+#     categories = [d[0] for d in Artist.query.with_entities(Artist.category).distinct().all()]
+
+#     return render_template('beauticians.html', artists=artists, states=states, wedding_types=wedding_types, districts=districts, category=categories)
+
+
 
 @app.route('/beauticians', methods=['GET', 'POST'])
 def beauticians():
@@ -218,7 +261,10 @@ def beauticians():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    artists = Artist.query.limit(3).all()  # Fetch first three artists
+    categories = [c[0] for c in Artist.query.with_entities(Artist.category).distinct().all()]
+    return render_template('index.html', artists=artists, categories=categories)
+
 
 
 @app.route('/apply')
@@ -346,6 +392,23 @@ def view_artist(artist_id):
     if not artist:
         return "Artist not found!", 404
     return render_template('artist_profile.html', artist=artist)
+
+
+@app.route('/priya')
+def priya():
+    return render_template('priya.html')
+
+@app.route('/anita')
+def anita():
+    return render_template('anita.html')
+
+@app.route('/arjun')
+def arjun():
+    return render_template('arjun.html')
+
+
+
+
 
 
 

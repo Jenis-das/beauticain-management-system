@@ -79,9 +79,7 @@
     max-width: 400px;
   }
 
-  /* .searchable-select .dropdown div:hover {
-    background-color: #f0f0f0;
-  } */
+  
 
   @media (max-width: 600px) {
     .form-group select,
@@ -117,7 +115,6 @@
 </nav>
     <section class="real-weddings">
         <h2 id="ourbeauticians">Our beauticians</h2>
-
         <form method="GET" class="filter-form">
             <div class="form-group">
               <select name="wedding_type" id="wedding_type">
@@ -127,16 +124,15 @@
                 {% endfor %}
               </select>
             </div>
-
-
             <div class="form-group">
-              <select name="category" id="beauticianType">
-                <option value="">Select beautician Type</option>
-                {% for cat in category%}
+              <select name="category" id="category">
+                <option value="">Select Beautician Type</option>
+                {% for cat in category %}
                   <option value="{{ cat }}">{{ cat }}</option>
                 {% endfor %}
               </select>
             </div>
+            
           
             <div class="form-group searchable-select">
               <input type="text" id="district_search" placeholder="Type to search district...">
@@ -233,13 +229,14 @@
       }
     });
   
-    districtDropdown.addEventListener('click', (event) => {
-      if (event.target.tagName === 'DIV') {
-        districtSearch.value = event.target.textContent;
-        districtInput.value = event.target.dataset.value;
-        districtDropdown.style.display = 'none';
-      }
-    });
+    document.getElementById('district_dropdown').addEventListener('click', function(event) {
+    if (event.target.tagName === 'DIV') {
+        document.getElementById('district_search').value = event.target.textContent;
+        document.getElementById('district').value = event.target.dataset.value;  // Ensure hidden input is updated
+        document.getElementById('district_dropdown').style.display = 'none';
+        console.log("Selected District:", event.target.dataset.value); // Debugging
+    }});
+
   </script>
 </body>
 </html>
