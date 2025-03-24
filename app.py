@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = 'fashion'
 
 # Configure SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///default.db'  # Default DB (even if unused)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///default.db'  
 app.config['SQLALCHEMY_BINDS'] = {
     'artists_db': 'sqlite:///artists.db',
     'applications_db': 'sqlite:///applications.db',
@@ -25,8 +25,6 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)  
     email = db.Column(db.String(100), unique=True, nullable=False)  
     password = db.Column(db.String(200), nullable=False)  # Store hashed passwords
-
-
 
 
 class Application(db.Model):
@@ -46,7 +44,6 @@ class Application(db.Model):
     cost = db.Column(db.Integer, nullable=False)
     image_filename = db.Column(db.String(200), nullable=False)
     submitted_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-
 
 
 
@@ -284,8 +281,8 @@ def dashboard():
     return render_template('dashboard.html')
 
 # Admin credentials (store in env variables or database for production use)
-ADMIN_EMAIL = "ragv@gmail.com"
-ADMIN_PASSWORD = "ragv12345678"
+ADMIN_EMAIL = "ragav@gmail.com"
+ADMIN_PASSWORD = "ragav12345678"
 
 @app.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
@@ -393,20 +390,6 @@ def view_artist(artist_id):
     if not artist:
         return "Artist not found!", 404
     return render_template('artist_profile.html', artist=artist)
-
-
-@app.route('/priya')
-def priya():
-    return render_template('priya.html')
-
-@app.route('/anita')
-def anita():
-    return render_template('anita.html')
-
-@app.route('/arjun')
-def arjun():
-    return render_template('arjun.html')
-
 
 
 
