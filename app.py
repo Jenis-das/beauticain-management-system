@@ -4,6 +4,9 @@ import os
 from functools import wraps
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_mail import Mail, Message
+from io import BytesIO
+
 
 app = Flask(__name__)
 app.secret_key = 'fashion'
@@ -19,6 +22,79 @@ app.config['SQLALCHEMY_BINDS'] = {
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
+
+# Flask-Mail Configuration (Use environment variables for security)
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME", "questionmarkcreations143@gmail.com")  # Use env variable
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD", "cqqr towk lefs zerq")  # Use env variable
+app.config["MAIL_DEFAULT_SENDER"] = app.config["MAIL_USERNAME"]
+
+
+mail = Mail(app)
+
+# Apply Route
+@app.route('/apply', methods=['GET', 'POST'])
+def apply():
+    if request.method == 'POST':
+        try:
+            # Get form data
+            name = request.form['name']
+            category = request.form['category']
+            about = request.form['about']
+            area = request.form['area']
+            state = request.form['state']
+            district = request.form['district']
+            phone = request.form['phone']
+            whatsapp = request.form.get('whatsapp', 'N/A')  # Optional
+            email = request.form['email']
+            pincode = request.form.get('pincode', 'N/A')  # Optional
+            marriage_type = request.form['marriage_type']
+            cost = request.form['cost']
+            image = request.files.get('image')
+
+            # Email subject & body
+            subject = "New Artist Application Received"
+            body = f"""
+            New application received:
+
+            Name: {name}
+            Category: {category}
+            About: {about}
+
+            Address: {area}, {district}, {state} - {pincode}
+            Phone: {phone}
+            WhatsApp: {whatsapp}
+            Email: {email}
+
+            Marriage Type: {marriage_type}
+            Work Rate: ₹{cost}/hour
+            """
+
+            # Send Email
+            msg = Message(subject, recipients=[email])
+            msg.body = body
+
+            # Attach image if provided
+            if image and image.filename:
+                filename = secure_filename(image.filename)
+                image_bytes = BytesIO(image.read())  # Read the file in memory
+                msg.attach(filename, image.content_type, image_bytes.getvalue())
+
+            mail.send(msg)
+            flash("Application submitted! Confirmation email sent.", "success")
+
+        except Exception as e:
+            flash(f"Error submitting application: {str(e)}", "danger")
+
+        return redirect(url_for('apply'))
+
+    return render_template('apply.html')
+
+
+
 # user database 
 class User(db.Model):  
     __bind_key__ = 'login'  # Bind to the correct database
@@ -27,23 +103,26 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)  # Store hashed passwords
 
 
-class Application(db.Model):
-    __bind_key__ = 'applications_db'  # Binds to applications.db
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    category = db.Column(db.String(50), nullable=False)
-    about = db.Column(db.Text, nullable=False)
-    area = db.Column(db.String(150), nullable=False)
-    state = db.Column(db.String(50), nullable=False)
-    district = db.Column(db.String(50), nullable=False)
-    phone = db.Column(db.String(15), nullable=False)
-    whatsapp = db.Column(db.String(15), nullable=True)
-    email = db.Column(db.String(100), nullable=False, unique=True)
-    pincode = db.Column(db.String(10), nullable=False)
-    marriage_type = db.Column(db.String(50), nullable=False)
-    cost = db.Column(db.Integer, nullable=False)
-    image_filename = db.Column(db.String(200), nullable=False)
-    submitted_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+
+
+# class Application(db.Model):
+#     __bind_key__ = 'applications_db'  # Binds to applications.db
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(100), nullable=False)
+#     category = db.Column(db.String(50), nullable=False)
+#     about = db.Column(db.Text, nullable=False)
+#     area = db.Column(db.String(150), nullable=False)
+#     state = db.Column(db.String(50), nullable=False)
+#     district = db.Column(db.String(50), nullable=False)
+#     phone = db.Column(db.String(15), nullable=False)
+#     whatsapp = db.Column(db.String(15), nullable=True)
+#     email = db.Column(db.String(100), nullable=False, unique=True)
+#     pincode = db.Column(db.String(10), nullable=False)
+#     marriage_type = db.Column(db.String(50), nullable=False)
+#     cost = db.Column(db.Integer, nullable=False)
+#     image_filename = db.Column(db.String(200), nullable=False)
+#     submitted_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
 
 
@@ -117,56 +196,56 @@ def logout():
     flash('Logged out successfully!', 'info')
     return redirect(url_for('login'))
 
-@app.route('/application', methods=['GET', 'POST'])
-def application():
-    if request.method == 'POST':
-        name = request.form['name']
-        category = request.form['category']
-        about = request.form['about']
-        area = request.form['area']
-        state = request.form['state']
-        district = request.form['district']
-        phone = request.form['phone']
-        whatsapp = request.form['whatsapp']
-        email = request.form['email']
-        pincode = request.form['pincode']
-        marriage_type = request.form['marriage_type']
-        cost = request.form['cost']
+# @app.route('/application', methods=['GET', 'POST'])
+# def application():
+#     if request.method == 'POST':
+#         name = request.form['name']
+#         category = request.form['category']
+#         about = request.form['about']
+#         area = request.form['area']
+#         state = request.form['state']
+#         district = request.form['district']
+#         phone = request.form['phone']
+#         whatsapp = request.form['whatsapp']
+#         email = request.form['email']
+#         pincode = request.form['pincode']
+#         marriage_type = request.form['marriage_type']
+#         cost = request.form['cost']
         
-        # Handle Image Upload
-        if 'image' not in request.files:
-            flash('No image file found!', 'danger')
-            return redirect(request.url)
+#         # Handle Image Upload
+#         if 'image' not in request.files:
+#             flash('No image file found!', 'danger')
+#             return redirect(request.url)
 
-        image = request.files['image']
-        if image.filename == '':
-            flash('No selected file!', 'danger')
-            return redirect(request.url)
+#         image = request.files['image']
+#         if image.filename == '':
+#             flash('No selected file!', 'danger')
+#             return redirect(request.url)
 
-        filename = secure_filename(image.filename)
-        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        image.save(image_path)
+#         filename = secure_filename(image.filename)
+#         image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+#         image.save(image_path)
 
-        # Check if email already exists
-        existing_application = Application.query.filter_by(email=email).first()
-        if existing_application:
-            flash("You have already applied!", "dangen"
-            "r")
-            return redirect(url_for('application'))
+#         # Check if email already exists
+#         existing_application = Application.query.filter_by(email=email).first()
+#         if existing_application:
+#             flash("You have already applied!", "dangen"
+#             "r")
+#             return redirect(url_for('application'))
 
-        # Save the application
-        new_application = Application(
-            name=name, category=category, about=about, area=area, state=state,
-            district=district, phone=phone, whatsapp=whatsapp, email=email,
-            pincode=pincode, marriage_type=marriage_type, cost=cost, image_filename=filename
-        )
-        db.session.add(new_application)
-        db.session.commit()
+#         # Save the application
+#         new_application = Application(
+#             name=name, category=category, about=about, area=area, state=state,
+#             district=district, phone=phone, whatsapp=whatsapp, email=email,
+#             pincode=pincode, marriage_type=marriage_type, cost=cost, image_filename=filename
+#         )
+#         db.session.add(new_application)
+#         db.session.commit()
 
-        flash("Application submitted successfully!", "success")
-        return redirect(url_for('application'))
+#         flash("Application submitted successfully!", "success")
+#         return redirect(url_for('application'))
 
-    return render_template('application.html')
+#     return render_template('application.html')
 
 
 @app.route('/applications')
@@ -174,6 +253,9 @@ def applications_list():
     applications = Application.query.all()
     return render_template('applications.html', applications=applications)
 
+@app.route('/aboutus')
+def aboutus():
+    return render_template('aboutus.html')
 
 
 # @app.route('/beauticians', methods=['GET', 'POST'])
@@ -265,9 +347,9 @@ def home():
 
 
 
-@app.route('/apply')
-def apply():
-    return render_template('apply.html')
+# @app.route('/apply')
+# def apply():
+#     return render_template('apply.html')
 
 
 

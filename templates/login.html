@@ -62,11 +62,24 @@ a:hover {
     text-decoration: underline;
 }
 
-
+.alert{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    left: 0;
+    top: 1rem ;
+}
 
     </style>
 </head>
 <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
     <div class="container">
         <h2>Login</h2>
         <form action="{{ url_for('login') }}" method="POST">
