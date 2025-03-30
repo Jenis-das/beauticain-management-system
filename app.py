@@ -28,8 +28,8 @@ db = SQLAlchemy(app)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME", "questionmarkcreations143@gmail.com")  # Use env variable
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD", "cqqr towk lefs zerq")  # Use env variable
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME", "abcde@gmail.com")  # Use env variable
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD", "gahg sdgh dfww bxnb")  # Use env variable
 app.config["MAIL_DEFAULT_SENDER"] = app.config["MAIL_USERNAME"]
 
 
